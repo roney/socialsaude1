@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.socialsaude.hacker.activity.MainScreenSSActivity;
+
 public class LoginActivity extends Activity {
 
     private EditText mPasswordView;
@@ -29,6 +31,8 @@ public class LoginActivity extends Activity {
             public void onClick(View view) {
                 //TODO: fazer login
                 Toast.makeText(getApplicationContext(), "Login", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this, MainScreenSSActivity.class);
+                startActivity(intent);
 
             }
         });

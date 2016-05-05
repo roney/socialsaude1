@@ -9,7 +9,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/social_saude_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
@@ -32,7 +32,11 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
-
+        <activity
+            android:name="com.socialsaude.hacker.activity.MainScreenSSActivity"
+            android:label="@string/title_screen_ss"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".RegisterActivity">
         </activity>
