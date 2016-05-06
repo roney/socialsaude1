@@ -13,7 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.gustavo.myapplication.R;
+import com.socialsaude.hacker.login.R;
 
 /**
  * Created by italofeitosa on 04/05/2016.

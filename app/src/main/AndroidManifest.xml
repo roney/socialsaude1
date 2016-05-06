@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.gustavo.myapplication" >
+    package="com.socialsaude.hacker.login" >
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -19,7 +19,7 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".SplashScreenActivity"
+            android:name="com.socialsaudade.hacker.login.SplashScreenActivity"
             android:label="@string/title_activity_splash_screen"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="com.socialsaudade.hacker.login.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
         <activity
@@ -38,10 +38,10 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".RegisterActivity">
+            android:name="com.socialsaudade.hacker.login.RegisterActivity">
         </activity>
         <activity
-            android:name=".ForgotPasswordActivity">
+            android:name="com.socialsaudade.hacker.login.ForgotPasswordActivity">
         </activity>
     </application>
 
