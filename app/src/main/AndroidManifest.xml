@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.example.gustavo.myapplication"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.socialsaude.hacker.login" >
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
@@ -19,7 +19,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".SplashScreenActivity"
+            android:name="com.socialsaudade.hacker.login.SplashScreenActivity"
             android:label="@string/title_activity_splash_screen"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -29,8 +29,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login">
+            android:name="com.socialsaudade.hacker.login.LoginActivity"
+            android:label="@string/title_activity_login" >
         </activity>
         <activity
             android:name="com.socialsaude.hacker.activity.MainScreenSSActivity"
@@ -42,9 +42,15 @@
         <activity android:name=".ForgotPasswordActivity">
         </activity>
         <activity
+            android:name="com.socialsaudade.hacker.login.RegisterActivity">
+        </activity>
+        <activity
             android:name="com.socialsaude.hacker.activity.RightMenuActivity"
             android:label="@string/title_activity_right_menu"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name="com.socialsaudade.hacker.login.ForgotPasswordActivity">
         </activity>
         <activity
             android:name="com.socialsaude.hacker.activity.ListActivity"

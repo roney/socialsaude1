@@ -1,18 +1,15 @@
-package com.example.gustavo.myapplication;
+package com.socialsaudade.hacker.login;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+import com.socialsaude.hacker.login.R;
 
 import com.socialsaude.hacker.activity.MainScreenSSActivity;
 
