@@ -6,5 +6,7 @@
     <color name="backgroundApp">#205087</color>
     <color name="orangeApp">#F89616</color>
     <color name="backgroundGray">#E2E9ED</color>
-
+    <color name="grey">#9fa6ad</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 </resources>

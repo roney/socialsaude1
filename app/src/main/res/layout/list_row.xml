@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dip" >
+
+    <!--  ListRow Left sied Thumbnail image -->
+    <LinearLayout android:id="@+id/thumbnail"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:padding="3dip"
+                  android:layout_alignParentLeft="true"
+                  android:background="@drawable/image_bg"
+                  android:layout_marginRight="5dip">
+
+        <ImageView
+            android:id="@+id/list_image"
+            android:layout_width="75dip"
+            android:layout_height="50dip"
+            android:src="@drawable/postoexample"/>
+
+    </LinearLayout>
+
+    <!-- Title-->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:textColor="@color/black"
+        android:typeface="sans"
+        android:textSize="16dip"/>
+
+    <!-- Address -->
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:textColor="@color/black"
+        android:textSize="12dip"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"/>
+
+    <!-- Office hour -->
+    <TextView
+        android:id="@+id/expedient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/address"
+        android:textColor="@color/grey"
+        android:textSize="12dip"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"/>
+
+    <!-- Duration -->
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/title"
+        android:gravity="right"
+        android:visibility="gone"
+        android:text="5:45"
+        android:layout_marginRight="5dip"
+        android:textSize="10dip"
+        android:textColor="#10bcc9"
+        android:textStyle="bold"/>
+
+    <!-- Rightend Arrow -->
+    <ImageView android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:visibility="gone"
+               android:src="@null"
+               android:layout_alignParentRight="true"
+               android:layout_centerVertical="true"/>
+
+</RelativeLayout>
