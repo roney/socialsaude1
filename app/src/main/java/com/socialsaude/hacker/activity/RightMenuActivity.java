@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.example.gustavo.myapplication.R;
+import com.socialsaude.hacker.login.R;
 
 public class RightMenuActivity extends AppCompatActivity {
 

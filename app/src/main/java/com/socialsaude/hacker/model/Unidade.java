@@ -1,4 +1,4 @@
-package com.socialsaude.hacker.activity;
+package com.socialsaude.hacker.model;
 
 
 public class Unidade {

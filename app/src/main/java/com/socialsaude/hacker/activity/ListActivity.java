@@ -3,17 +3,16 @@ package com.socialsaude.hacker.activity;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-import com.example.gustavo.myapplication.R;
+import com.socialsaude.hacker.adapter.ListAdapter;
+import com.socialsaude.hacker.login.R;
+import com.socialsaude.hacker.model.Unidade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +49,7 @@ public class ListActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_list, menu);
 
-        SearchView mSearchView = (SearchView) menu.findItem(R.id.search);
+        //SearchView mSearchView = (SearchView) menu.findItem(R.id.search);
         //setupSearchView(mSearchView);
         return true;
 
