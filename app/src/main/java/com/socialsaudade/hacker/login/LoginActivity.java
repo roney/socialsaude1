@@ -12,22 +12,43 @@ import android.widget.Toast;
 import com.socialsaude.hacker.login.R;
 
 import com.socialsaude.hacker.activity.MainScreenSSActivity;
+import com.socialsaude.hacker.requests.LoginRequest;
+
+import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends Activity {
 
     private EditText mPasswordView;
+    private EditText loginEditText;
+    private EditText passwordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        loginEditText = (EditText)findViewById(R.id.login);
+        passwordEditText = (EditText)findViewById(R.id.password);
         Button mLoginButton = (Button) findViewById(R.id.login_button);
         mLoginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO: fazer login
                 Toast.makeText(getApplicationContext(), "Login", Toast.LENGTH_SHORT).show();
+                String email = null;
+                if(loginEditText != null) {
+                    email = loginEditText.getText().toString();
+                }
+                String password = passwordEditText.getText().toString();
+
+                try {
+                    boolean userExist = new LoginRequest(LoginActivity.this, email, password).execute("http://socialsaude.mybluemix.net/api/users/login").get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
                 Intent intent = new Intent(LoginActivity.this, MainScreenSSActivity.class);
                 startActivity(intent);
 

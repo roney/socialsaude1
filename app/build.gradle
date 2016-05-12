@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.example.gustavo.myapplication"
+        applicationId "com.hackercidadao.socialsaude"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
@@ -25,4 +25,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:design:23.2.0'
     compile 'com.google.android.gms:play-services:8.4.0'
+    compile 'com.google.code.gson:gson:2.3.1'
 }

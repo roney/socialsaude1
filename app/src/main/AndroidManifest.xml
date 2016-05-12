@@ -28,7 +28,11 @@
             android:name="com.socialsaudade.hacker.login.SplashScreenActivity"
             android:label="@string/title_activity_splash_screen"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
             android:name="com.socialsaudade.hacker.login.LoginActivity"
@@ -38,11 +42,7 @@
             android:name="com.socialsaude.hacker.activity.MainScreenSSActivity"
             android:label="@string/title_screen_ss"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name="com.socialsaudade.hacker.login.RegisterActivity">
         </activity>
