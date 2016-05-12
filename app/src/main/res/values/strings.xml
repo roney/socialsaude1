@@ -32,7 +32,7 @@
     </string>
     <string name="menu_upas">UPAs</string>
     <string name="menu_upas_desc">Encontre todas as UPAs próximas à você..</string>
-    <string name="menu_pdss">PDSs</string>
+    <string name="menu_pdss">Postos de Saúde</string>
     <string name="menu_pdss_desc">Encontre todos os Postos de Saúde próximos à você...</string>
     <string name="menu_medicines">Remédios</string>
     <string name="menu_medicines_desc">Localize unidades de saúde a partir da disponibilidade de
@@ -45,7 +45,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_screen_ss">Social Saúde</string>
     <string name="title_activity_right_menu">Acesso Rápido</string>
-    <string name="title_activity_list">Postos de Saúde</string>
+    <string name="title_activity_list">Médicos</string>
     <string name="title_activity_show">ShowActivity</string>
 
     <string name="item_title">IJF Fortaleza</string>
@@ -59,4 +59,6 @@
         deserunt mollit anim id est laborum.
     </string>
     <string name="detail_location">"Rua Frei Vidal, 1756 - São João do Tauape"</string>
+
+    <string name="action_search">Procurar</string>
 </resources>

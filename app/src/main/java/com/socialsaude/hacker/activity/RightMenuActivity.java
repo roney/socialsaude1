@@ -33,6 +33,41 @@ public class RightMenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        op2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RightMenuActivity.this, ListActivity.class);
+                startActivity(intent);
+            }
+        });
+        op3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RightMenuActivity.this, ListActivity.class);
+                startActivity(intent);
+            }
+        });
+        op4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RightMenuActivity.this, ListActivity.class);
+                startActivity(intent);
+            }
+        });
+        op5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RightMenuActivity.this, ListActivity.class);
+                startActivity(intent);
+            }
+        });
+        op6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RightMenuActivity.this, ListActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
