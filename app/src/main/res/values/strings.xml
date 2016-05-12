@@ -46,4 +46,17 @@
     <string name="title_screen_ss">Social Saúde</string>
     <string name="title_activity_right_menu">Acesso Rápido</string>
     <string name="title_activity_list">Postos de Saúde</string>
+    <string name="title_activity_show">ShowActivity</string>
+
+    <string name="item_title">IJF Fortaleza</string>
+    <string name="item_desc">Próximo a igreja da Sé. Ao lado do Farias Brito
+    </string>
+    <string name="detail_desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+        deserunt mollit anim id est laborum.
+    </string>
+    <string name="detail_location">"Rua Frei Vidal, 1756 - São João do Tauape"</string>
 </resources>

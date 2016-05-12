@@ -1,5 +1,6 @@
 package com.socialsaude.hacker.activity;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -7,8 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SearchView;
 
 import com.socialsaude.hacker.adapter.ListAdapter;
 import com.socialsaude.hacker.login.R;
@@ -41,6 +43,13 @@ public class ListActivity extends AppCompatActivity {
         items.add(new Unidade("IJF", "Rua Sem Número", "24hs"));
         ListAdapter adapter=new ListAdapter(this, items);
         list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(ListActivity.this, DetailsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
