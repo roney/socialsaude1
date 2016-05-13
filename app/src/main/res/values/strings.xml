@@ -64,4 +64,5 @@
     <string name="action_search">Procurar</string>
     <string name="voltar"><u>Voltar</u></string>
     <string name="type_email_for_new_password">Digite seu email para enviarmos uma nova senha:</string>
+    <string name="API_URL">http://socialsaude.mybluemix.net/api/</string>
 </resources>
