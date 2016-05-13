@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/social_saude_logo" />
 
     </LinearLayout>
@@ -44,7 +44,8 @@
                     android:hint="@string/prompt_name"
                     android:inputType="textPersonName"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -79,17 +80,51 @@
                     android:maxLines="1"
                     android:singleLine="true" />
 
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/repeat_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_repeat_password"
+                    android:imeActionId="@+id/login"
+                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/finish_register_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_register"
-                android:textStyle="bold"
+                android:id="@+id/send_new_password_button"
+
+                android:text="@string/register"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:layout_width="220dp"
+                android:layout_height="45dp"
+                android:background="@drawable/buttonblue"
                 />
+
+            <TextView
+                android:id="@+id/back_from_register_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/voltar"
+                android:textColor="@color/grey"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"/>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

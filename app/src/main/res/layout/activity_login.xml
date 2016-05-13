@@ -12,7 +12,9 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="100dp">
+        android:layout_height="100dp"
+        android:layout_marginTop="50dp"
+        >
 
         <ImageView
             android:id="@+id/imageView2"
@@ -31,11 +33,13 @@
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
 
                 <EditText
                     android:id="@+id/email"
@@ -68,29 +72,38 @@
 
             <Button
                 android:id="@+id/login_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
+                android:layout_marginTop="40dp"
+                android:text="@string/login"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:layout_width="220dp"
+                android:layout_height="45dp"
+                android:background="@drawable/buttonblue"
+                />
+
+            <TextView
+                android:id="@+id/forgot_password_tv"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_login"
-                android:textStyle="bold"
+                android:text="@string/forgot_password"
+                android:textColor="@color/grey"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
                 />
 
             <Button
                 android:id="@+id/register_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/action_register"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/forgot_password_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/action_forgot_password"
-                android:textStyle="bold" />
+                android:text="@string/register"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="25dp"
+                android:layout_width="220dp"
+                android:layout_height="45dp"
+                android:background="@drawable/buttonorange"
+                />
 
         </LinearLayout>
     </ScrollView>

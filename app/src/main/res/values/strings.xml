@@ -9,10 +9,11 @@
     <string name="prompt_name">Nome</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha</string>
-    <string name="action_login">Login</string>
-    <string name="action_register">Cadastrar</string>
-    <string name="action_forgot_password">Esqueci a senha</string>
-    <string name="action_request_new_password">Enviar nova senha por email</string>
+    <string name="prompt_repeat_password">Repetir Senha</string>
+    <string name="login">LOGIN</string>
+    <string name="register">CADASTRAR</string>
+    <string name="forgot_password"><u>Esqueci minha senha</u></string>
+    <string name="request_new_password">Enviar nova senha por email</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
@@ -61,4 +62,6 @@
     <string name="detail_location">"Rua Frei Vidal, 1756 - São João do Tauape"</string>
 
     <string name="action_search">Procurar</string>
+    <string name="voltar"><u>Voltar</u></string>
+    <string name="type_email_for_new_password">Digite seu email para enviarmos uma nova senha:</string>
 </resources>
