@@ -4,21 +4,35 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.socialsaude.hacker.login.R;
 
 import com.socialsaude.hacker.activity.MainScreenSSActivity;
 import com.socialsaude.hacker.requests.LoginRequest;
+import com.socialsaude.hacker.requests.MyApiEndpointInterface;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends Activity {
 
+    public static final String BASE_URL = "http://socialsaude.mybluemix.net/api/";
     private EditText mPasswordView;
     private EditText loginEditText;
     private EditText passwordEditText;
@@ -28,30 +42,65 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        loginEditText = (EditText)findViewById(R.id.login);
+        loginEditText = (EditText)findViewById(R.id.email_login);
         passwordEditText = (EditText)findViewById(R.id.password);
         Button mLoginButton = (Button) findViewById(R.id.login_button);
         mLoginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: fazer login
-                Toast.makeText(getApplicationContext(), "Login", Toast.LENGTH_SHORT).show();
+
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build();
+
+                MyApiEndpointInterface apiService = retrofit.create(MyApiEndpointInterface.class);
+
+
                 String email = null;
                 if(loginEditText != null) {
                     email = loginEditText.getText().toString();
                 }
                 String password = passwordEditText.getText().toString();
 
-                try {
-                    boolean userExist = new LoginRequest(LoginActivity.this, email, password).execute("http://socialsaude.mybluemix.net/api/users/login").get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
+                Log.d("DebugLogin", "vai verificar login: "+ email + ", senha: "+ password);
 
-                Intent intent = new Intent(LoginActivity.this, MainScreenSSActivity.class);
-                startActivity(intent);
+                Call<Void> call = apiService.verifyLogin(email,md5(password));
+                call.enqueue(new Callback<Void>() {
+
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        Log.d("DebugLogin", "entrou onResponse");
+                        Log.d("DebugLogin", response.message());
+//                        Log.d("DebugLogin", response.body());
+                        if(response.message().equals("OK")) {
+                            Intent intent = new Intent(LoginActivity.this, MainScreenSSActivity.class);
+                            startActivity(intent);
+                        } else{
+                            Toast.makeText(getApplicationContext(), "Usuário ou senha incorretos.", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.d("DebugLogin", "entrou onFailure");
+                        Log.d("DebugLogin", t.getMessage());
+                    }
+                });
+
+//                try {
+//                    boolean userExist = new LoginRequest(LoginActivity.this, email, password).execute("http://socialsaude.mybluemix.net/api/users/login").get();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                } catch (ExecutionException e) {
+//                    e.printStackTrace();
+//                }
+//
+
 
             }
         });
@@ -61,7 +110,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View view) {
                 //TODO: cadastrar
-                Toast.makeText(getApplicationContext(), "Cadastrar", Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent();
                 intent.setClass(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
@@ -81,6 +130,24 @@ public class LoginActivity extends Activity {
             }
         });
 
+    }
+    public String md5(String s) {
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuffer hexString = new StringBuffer();
+            for (int i=0; i<messageDigest.length; i++)
+                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 

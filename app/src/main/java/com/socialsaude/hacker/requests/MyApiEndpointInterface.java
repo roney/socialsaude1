@@ -18,12 +18,15 @@ public interface MyApiEndpointInterface {
     // Request method and URL specified in the annotation
     // Callback for the parsed response is the last parameter
 
-    @GET("users/{username}")
-    Call<User> getUser(@Path("username") String username);
+//    @GET("users/{username}")
+//    Call<User> getUser(@Path("username") String username);
+//
+//    @GET("group/{id}/users")
+//    Call<List<User>> groupList(@Path("id") int groupId, @Query("sort") String sort);
 
-    @GET("group/{id}/users")
-    Call<List<User>> groupList(@Path("id") int groupId, @Query("sort") String sort);
+    @GET("users/verify")
+    Call<Void> verifyLogin(@Query("email")String email, @Query("password")String password);
 
     @POST("users/add")
-    Call<User> createUser(@Body User user);
+    Call<String> createUser(@Body User user);
 }

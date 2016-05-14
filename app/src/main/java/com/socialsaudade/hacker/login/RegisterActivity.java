@@ -10,11 +10,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.socialsaude.hacker.login.R;
 import com.socialsaude.hacker.model.User;
 import com.socialsaude.hacker.requests.MyApiEndpointInterface;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,50 +41,90 @@ public class RegisterActivity extends Activity {
         final EditText mNameET = (EditText) findViewById(R.id.name);
         final EditText mEmailET = (EditText) findViewById(R.id.email_register);
         final EditText mPasswordET = (EditText) findViewById(R.id.password_register);
-
+        final EditText mPassword2ET = (EditText) findViewById(R.id.repeat_password);
         Button mRegisterButton = (Button) findViewById(R.id.confirm_register_button);
+
         mRegisterButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: fazer cadastro
+
+                String name = mNameET.getText().toString();
+                String email = mEmailET.getText().toString();
+                String password = mPasswordET.getText().toString();
+                String password2 = mPassword2ET.getText().toString();
+
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
 
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create(gson))
                         .build();
 
                 MyApiEndpointInterface apiService = retrofit.create(MyApiEndpointInterface.class);
 
                 User user = new User();
-                user.setName(mNameET.getText().toString());
-                user.setEmail(mEmailET.getText().toString());
-                user.setPassword(mPasswordET.getText().toString());
+                user.setName(name);
+                user.setEmail(email);
+                user.setPassword(md5(password));
 
                 Log.d("DebugCadastro", "Vai tentar criar usuario: " + user.getName() + ", " + user.getEmail() + ", " + user.getPassword());
 
-                Call<User> call = apiService.createUser(user);
-                call.enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-                        Log.d("DebugCadastro", "entrou onResponse");
-                        Log.d("DebugCadastro", response.message());
-                        Log.d("DebugCadastro", response.toString());
+                //Verifica se algum campo está em branco
+                if (isAnyEmpty(name, email, password, password2)) {
+                    Log.d("DebugCadastro", "algum campo em branco");
+                    Toast.makeText(getApplicationContext(), "Todos os campos devem ser preenchidos!", Toast.LENGTH_LONG).show();
+                } else {
+                    //Verifica se o email é inválido
+                    if (!isValidEmail(email)) {
+                        Log.d("DebugCadastro", "email inválido");
+                        Toast.makeText(getApplicationContext(), "Insira um email válido!", Toast.LENGTH_LONG).show();
+                    } else {
+                        //Verifica se as senhas são válidas
+                        if (isValidPassword(password, password2)) {
 
-                        Intent intent = new Intent();
-                        intent.setClass(RegisterActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
+                            Call<String> call = apiService.createUser(user);
+                            call.enqueue(new Callback<String>() {
+                                @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    Log.d("DebugCadastro", "entrou onResponse");
+                                    Log.d("DebugCadastro", response.message());
+
+                                    if (response.message().equals("Conflict")) {
+                                        Log.d("DebugCadastro", "deu conflito");
+                                        Toast.makeText(getApplicationContext(), "O email escolhido já está sendo utilizado. Por gentileza, insira outro email.", Toast.LENGTH_LONG).show();
+
+                                    } else {
+                                        if(response.message().equals("OK")) {
+                                            String idUsuarioCadastrado = response.body();
+                                            Log.d("DebugCadastro", "tudo OK, id: "+idUsuarioCadastrado);
+
+                                            Intent intent = new Intent();
+                                            intent.setClass(RegisterActivity.this, LoginActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    }
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+                                    Log.d("DebugCadastro", "entrou onFailure");
+                                    Log.d("DebugCadastro", t.getMessage());
+
+                                    Intent intent = new Intent();
+                                    intent.setClass(RegisterActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                    finish();
+
+                                }
+                            });
+
+                        }
                     }
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        Log.d("DebugCadastro", "entrou onFailure");
-                        Log.d("DebugCadastro", call.toString());
-                        Log.d("DebugCadastro", t.getMessage());
-                        t.fillInStackTrace();
-
-                    }
-                });
-
+                }
 //                try {
 //                    call.execute();
 //                } catch (IOException e) {
@@ -102,6 +147,56 @@ public class RegisterActivity extends Activity {
             }
         });
 
+    }
+
+    public final static boolean isAnyEmpty(String name, String email, String password, String password2) {
+        if (name.equals("") || email.equals("") || password.equals("") || password2.equals("")) {
+            return true;
+        }
+        return false;
+    }
+
+    public final boolean isValidPassword(String password, String password2) {
+
+        if (password.length() < 6) {
+            Log.d("DebugCadastro", "senha muito curta");
+            Toast.makeText(getApplicationContext(), "Insira uma senha com pelo menos 6 dígitos", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (!password.equals(password2)) {
+            Log.d("DebugCadastro", "senha1 e senha2 diferentes entre si");
+            Toast.makeText(getApplicationContext(), "As senhas informadas não coincidem", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return true;
+    }
+
+    public final static boolean isValidEmail(CharSequence target) {
+        if (target == null) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        }
+    }
+
+    public String md5(String s) {
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuffer hexString = new StringBuffer();
+            for (int i=0; i<messageDigest.length; i++)
+                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 
