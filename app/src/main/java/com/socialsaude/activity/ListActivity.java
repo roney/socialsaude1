@@ -1,27 +1,22 @@
-package com.socialsaude.hacker.activity;
+package com.socialsaude.activity;
 
 import android.app.SearchManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-import com.socialsaude.hacker.adapter.ListAdapter;
-import com.socialsaude.hacker.login.R;
-import com.socialsaude.hacker.model.Unidade;
+import com.socialsaude.adapter.ListAdapter;
+import com.socialsaude.R;
+import com.socialsaude.model.Unidade;
 
 import java.util.ArrayList;
 import java.util.List;

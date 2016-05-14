@@ -1,4 +1,4 @@
-package com.socialsaude.hacker.model;
+package com.socialsaude.model;
 
 import java.io.Serializable;
 

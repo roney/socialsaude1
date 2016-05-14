@@ -1,4 +1,4 @@
-package com.socialsaude.hacker.requests;
+package com.socialsaude.requests;
 
 import android.app.ProgressDialog;
 import android.content.Context;

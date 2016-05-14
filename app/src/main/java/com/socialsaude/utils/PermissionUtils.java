@@ -1,4 +1,4 @@
-package com.socialsaude.hacker.utils;
+package com.socialsaude.utils;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -11,7 +11,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.socialsaude.hacker.login.R;
+import com.socialsaude.R;
 
 public abstract class PermissionUtils {
 

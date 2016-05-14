@@ -1,4 +1,4 @@
-package com.socialsaudade.hacker.login;
+package com.socialsaude.login;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,11 +13,10 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.socialsaude.hacker.login.R;
-import com.socialsaude.hacker.model.User;
-import com.socialsaude.hacker.requests.MyApiEndpointInterface;
+import com.socialsaude.R;
+import com.socialsaude.model.User;
+import com.socialsaude.requests.MyApiEndpointInterface;
 
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -26,7 +25,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.POST;
 
 public class RegisterActivity extends Activity {
 

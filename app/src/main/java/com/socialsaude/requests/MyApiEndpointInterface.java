@@ -1,14 +1,11 @@
-package com.socialsaude.hacker.requests;
+package com.socialsaude.requests;
 
-import com.socialsaude.hacker.model.User;
-
-import java.util.List;
+import com.socialsaude.model.User;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**

@@ -1,4 +1,4 @@
-package com.socialsaudade.hacker.login;
+package com.socialsaude.login;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.socialsaude.hacker.login.R;
+import com.socialsaude.R;
+
 
 
 public class ForgotPasswordActivity extends Activity {

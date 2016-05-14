@@ -1,4 +1,4 @@
-package com.socialsaudade.hacker.login;
+package com.socialsaude.login;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,8 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.socialsaude.R;
 
-import com.socialsaude.hacker.login.R;
 
 public class MainActivity extends Activity {
 

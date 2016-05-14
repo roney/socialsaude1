@@ -1,4 +1,4 @@
-package com.socialsaude.hacker.adapter;
+package com.socialsaude.adapter;
 
 import java.util.List;
 
@@ -11,8 +11,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.socialsaude.hacker.login.R;
-import com.socialsaude.hacker.model.Unidade;
+import com.socialsaude.R;
+
+import com.socialsaude.model.Unidade;
 
 public class ListAdapter  extends BaseAdapter {
 

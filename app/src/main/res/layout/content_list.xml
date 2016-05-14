@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_vertical_margin_min"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.socialsaude.hacker.activity.ListActivity"
+    tools:context="com.socialsaude.activity.ListActivity"
     tools:showIn="@layout/activity_list">
 
     <ListView
