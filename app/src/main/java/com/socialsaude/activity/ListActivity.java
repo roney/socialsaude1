@@ -31,6 +31,7 @@ import com.socialsaude.adapter.UnitsAdapter;
 import com.socialsaude.adapter.UsersAdapter;
 import com.socialsaude.api.SocialSaudeApi;
 import com.socialsaude.api.response.UsersResponse;
+import com.socialsaude.api.response.UsersResponse;
 import com.socialsaude.socialsaudecommons.model.HealthUnit;
 import com.socialsaude.socialsaudecommons.model.Medication;
 import com.socialsaude.socialsaudecommons.model.Specialism;
@@ -38,6 +39,7 @@ import com.socialsaude.socialsaudecommons.model.User;
 import com.socialsaude.utils.Constants;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 import retrofit2.Call;
@@ -186,14 +188,14 @@ public class ListActivity extends AppCompatActivity {
             public void onResponse(Call<List<Medication>> call, Response<List<Medication>> response) {
                 Log.i("DebugLogin", response.message());
                 medications = response.body();
-                adapter = new MedicationsAdapter(ListActivity.this,medications );
+                adapter = new MedicationsAdapter(ListActivity.this, medications);
                 list.setAdapter(adapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Medication medication = (Medication) medications.get(position);
                         Intent intent = new Intent(ListActivity.this, MedicationsActivity.class);
-                        intent.putExtra("object", medication);
+                        intent.putExtra("object", (Serializable) medication);
                         startActivity(intent);
                     }
                 });
@@ -226,7 +228,7 @@ public class ListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         HealthUnit hospital = hospitals.get(position);
                         Intent intent = new Intent(ListActivity.this, UnitsActivity.class);
-                        intent.putExtra("object", hospital);
+                        intent.putExtra("object", (Serializable) hospital);
                         startActivity(intent);
                     }
                 });

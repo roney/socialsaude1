@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -45,9 +47,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.socialsaude.R;
+import com.socialsaude.adapter.UnitsAdapter;
+import com.socialsaude.api.SocialSaudeApi;
+import com.socialsaude.socialsaudecommons.model.HealthUnit;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by italofeitosa on 04/05/2016.
@@ -58,8 +67,7 @@ public class MainScreenSSActivity extends AppCompatActivity
         OnMapReadyCallback,
         NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener
-        {
+        LocationListener {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -68,7 +76,6 @@ public class MainScreenSSActivity extends AppCompatActivity
     private static final LatLng HOSPITAL = new LatLng(-3.768380, -38.613009);
     private static final LatLng UPA = new LatLng(-3.773754, -38.614553);
     private static final LatLng POSTO_DE_SAUDE = new LatLng(-3.769055, -38.607140);
-
 
 
     private GoogleMap mMap;
@@ -148,13 +155,12 @@ public class MainScreenSSActivity extends AppCompatActivity
                 mUiSettings.setMyLocationButtonEnabled(true);
                 mMap.setMyLocationEnabled(true);
             }
-        }
-        else {
+        } else {
             buildGoogleApiClient();
             mUiSettings.setMyLocationButtonEnabled(true);
             mMap.setMyLocationEnabled(true);
         }
-        mountMaker();
+        getUnits();
 
     }
 
@@ -183,7 +189,7 @@ public class MainScreenSSActivity extends AppCompatActivity
 
     }
 
-    private void checkLocationService(LocationRequest locationRequest){
+    private void checkLocationService(LocationRequest locationRequest) {
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
                 .addLocationRequest(locationRequest);
 
@@ -227,48 +233,57 @@ public class MainScreenSSActivity extends AppCompatActivity
         });
     }
 
-    //TODO Metodo de teste para montar os Makers
-    private void mountMaker(){
-        List<MarkerOptions> markerOptionsList = new ArrayList<>();
-        //Exemplo de hospitais
-        MarkerOptions markerHospital = new MarkerOptions();
-        markerHospital.position(HOSPITAL);
-        markerHospital.title("Hospital");
-        markerHospital.snippet("IJF: Grande porte");
-        markerHospital.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-
-        //Exemplo de UPAs
-        MarkerOptions markerUPA = new MarkerOptions();
-        markerUPA.position(UPA);
-        markerUPA.title("UPA");
-        markerUPA.snippet("Conjunto Ceara: Pequeno porte");
-        markerUPA.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-
-        //Exemplo de Posto de Saude
-        MarkerOptions markerPSaude = new MarkerOptions();
-        markerPSaude.position(POSTO_DE_SAUDE);
-        markerPSaude.title("Posto de Saúde");
-        markerPSaude.snippet("PDS CC: Medio porte");
-        markerPSaude.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-
-        markerOptionsList.add(markerHospital);
-        markerOptionsList.add(markerUPA);
-        markerOptionsList.add(markerPSaude);
-        addMarkerPointsLocation(markerOptionsList);
-    }
-
-    private void addMarkerPointsLocation (List<MarkerOptions> markerOptionsList){
+    private void addMarkerPointsLocation(List<MarkerOptions> markerOptionsList) {
         for (MarkerOptions markerOptions : markerOptionsList) {
             Marker marker = mMap.addMarker(markerOptions);
             markerList.add(marker);
         }
     }
 
-    private  void removeMarkerPointLocation(){
+    private void removeMarkerPointLocation() {
         for (int i = 0; i < markerList.size(); i++) {
             markerList.get(i).remove();
         }
     }
+
+
+    private void getUnits() {
+        Call<List<HealthUnit>> call = SocialSaudeApi.getClient(MainScreenSSActivity.this).getUnits();
+        call.enqueue(new Callback<List<HealthUnit>>() {
+
+            @Override
+            public void onResponse(Call<List<HealthUnit>> call, Response<List<HealthUnit>> response) {
+                Log.i("POINT", response.message());
+                List<HealthUnit> units = response.body();
+                List<MarkerOptions> markerOptionsList = new ArrayList<>();
+                if (!units.isEmpty()) {
+                    for (int i = 0; i < units.size(); i++) {
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        LatLng position = new LatLng(Double.valueOf(units.get(i).getLatitude()), Double.valueOf(units.get(i).getLongitude()));
+                        markerOptions.position(position);
+                        markerOptions.title(units.get(i).getName());
+                        markerOptions.snippet(units.get(i).getDescription());
+                        if (units.get(i).getSpecification().equals("HOSPITAL")) {
+                            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                        } else if (units.get(i).getSpecification().equals("UPA")) {
+                            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                        } else {
+                            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                        }
+                        markerOptionsList.add(markerOptions);
+                    }
+                    addMarkerPointsLocation(markerOptionsList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<HealthUnit>> call, Throwable t) {
+                Log.i("POINT", "entrou onFailure");
+                Log.i("POINT", t.getMessage());
+            }
+        });
+    }
+
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -281,8 +296,7 @@ public class MainScreenSSActivity extends AppCompatActivity
 
 
     @Override
-    public void onLocationChanged(Location location)
-    {
+    public void onLocationChanged(Location location) {
         mLastLocation = location;
 
         //Place current location marker
@@ -298,7 +312,7 @@ public class MainScreenSSActivity extends AppCompatActivity
     }
 
 
-    public boolean checkLocationPermission(){
+    public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -403,7 +417,18 @@ public class MainScreenSSActivity extends AppCompatActivity
 
                 return true;
             case R.id.nav_sos:
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "192"));
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
 
+                }
+                startActivity(intent);
                 return true;
             case R.id.nav_about:
 
