@@ -197,7 +197,7 @@ public class MainScreenSSActivity extends AppCompatActivity
                     case LocationSettingsStatusCodes.SUCCESS:
                         // All location settings are satisfied. The client can initialize location
                         // requests here.
-                        Log.d("STATUS","SUCCESS");
+                        Log.d("STATUS", "SUCCESS");
 
                         break;
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
@@ -404,29 +404,18 @@ public class MainScreenSSActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
 
         switch (id) {
-            case R.id.nav_camera:
-                return true;
-
-            case R.id.nav_gallery:
+            case R.id.nav_home:
 
                 return true;
-
-            case R.id.nav_slideshow:
-
-                return true;
-
-            case R.id.nav_manage:
+            case R.id.nav_sos:
 
                 return true;
-
-            case R.id.nav_share:
-
-                return true;
-
-            case R.id.nav_send:
+            case R.id.nav_about:
 
                 return true;
+            case R.id.nav_logout:
 
+                return true;
             default:
 
                 return true;
