@@ -18,7 +18,7 @@ import com.socialsaude.R;
 
 
 import com.socialsaude.activity.MainScreenSSActivity;
-import com.socialsaude.requests.MyApiEndpointInterface;
+import com.socialsaude.api.MyApiEndpointInterface;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

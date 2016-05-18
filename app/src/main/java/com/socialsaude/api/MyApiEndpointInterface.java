@@ -1,4 +1,4 @@
-package com.socialsaude.requests;
+package com.socialsaude.api;
 
 import com.socialsaude.model.User;
 
@@ -26,4 +26,7 @@ public interface MyApiEndpointInterface {
 
     @POST("users/add")
     Call<String> createUser(@Body User user);
+
+    @GET("users")
+    Call<Void> getUsers();
 }

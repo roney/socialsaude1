@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.socialsaude.R;
 import com.socialsaude.model.User;
-import com.socialsaude.requests.MyApiEndpointInterface;
+import com.socialsaude.api.MyApiEndpointInterface;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

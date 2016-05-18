@@ -1,4 +1,4 @@
-package com.socialsaude.requests;
+package com.socialsaude.api.request;
 
 import android.app.ProgressDialog;
 import android.content.Context;

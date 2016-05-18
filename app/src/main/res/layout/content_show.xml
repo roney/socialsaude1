@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.socialsaude.activity.DetailsActivity"
+    tools:context=".activity.UnitsActivity"
     tools:showIn="@layout/activity_show">
 
     <ImageView android:layout_width="match_parent"
