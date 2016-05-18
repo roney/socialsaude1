@@ -19,11 +19,11 @@ public class UsersAdapter extends BaseAdapter {
 
     private Activity activity;
     private static LayoutInflater inflater=null;
-    private List<Object> items;
+    private List<User> items;
 
     public UsersAdapter(Activity activity, List<User> items) {
         this.activity = activity;
-        (User)this.items=items;
+        this.items=items;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -50,12 +50,12 @@ public class UsersAdapter extends BaseAdapter {
         //TextView duration = (TextView)vi.findViewById(R.id.duration); // duration
         ImageView thumb_image=(ImageView)vi.findViewById(R.id.list_image); // thumb image
 
-        Unidade item = items.get(position);
+        User item = items.get(position);
 
         // Setting all values in listview
         name.setText(item.getName());
-        address.setText(item.getAddress());
-        expedient.setText(item.getExpedient());
+        address.setText(item.getEmail());
+        expedient.setText(item.getBirthdate());
         //duration.setText(item);
         return vi;
     }

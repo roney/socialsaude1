@@ -1,5 +1,6 @@
 package com.socialsaude.api.response;
 
+import com.socialsaude.socialsaudecommons.model.HealthProfessional;
 import com.socialsaude.socialsaudecommons.model.User;
 
 import java.util.List;
@@ -18,13 +19,13 @@ public class ProfessionalsReponse {
     public void setId(String id) {
         this.id = id;
     }
-    private List<User> body;
+    private List<HealthProfessional> body;
 
-    public List<User> getBody() {
+    public List<HealthProfessional> getBody() {
         return body;
     }
 
-    public void setBody(List<User> body) {
+    public void setBody(List<HealthProfessional> body) {
         this.body = body;
     }
 }

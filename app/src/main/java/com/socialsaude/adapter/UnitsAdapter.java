@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.socialsaude.R;
+import com.socialsaude.socialsaudecommons.model.HealthUnit;
 import com.socialsaude.socialsaudecommons.model.User;
 
 import java.util.List;
@@ -18,9 +19,9 @@ public class UnitsAdapter extends BaseAdapter {
 
     private Activity activity;
     private static LayoutInflater inflater=null;
-    private List<User> items;
+    private List<HealthUnit> items;
 
-    public UnitsAdapter(Activity activity, List<User> items) {
+    public UnitsAdapter(Activity activity, List<HealthUnit> items) {
         this.activity = activity;
         this.items=items;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -49,12 +50,12 @@ public class UnitsAdapter extends BaseAdapter {
         //TextView duration = (TextView)vi.findViewById(R.id.duration); // duration
         ImageView thumb_image=(ImageView)vi.findViewById(R.id.list_image); // thumb image
 
-        User item = items.get(position);
+        HealthUnit item = items.get(position);
 
         // Setting all values in listview
         name.setText(item.getName());
-        address.setText(item.getEmail());
-        expedient.setText(item.getBirthdate());
+        address.setText(item.getStreet() + " - " + item.getCity());
+        expedient.setText(item.getOpenhours());
         //duration.setText(item);
         return vi;
     }

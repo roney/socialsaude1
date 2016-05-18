@@ -16,20 +16,21 @@ public class SpecialitismsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_medications);
+        setContentView(R.layout.activity_specialitsms);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Set Collapsing Toolbar layout to the screen
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         // Set title of Detail page
-        collapsingToolbar.setTitle("TYLENOL® 750mg");
+        collapsingToolbar.setTitle("Pediatra");
         ImageView image = (ImageView) findViewById(R.id.image);
-        image.setImageResource(R.drawable.medications_example);
+        image.setImageResource(R.drawable.specialisms_example);
         TextView info = (TextView) findViewById(R.id.info);
-        info.setText("O TYLENOL® 750mg é indicado para o alívio temporário da dor de leve a moderada, " +
-                "como aquelas associadas a gripes, resfriados, " +
-                "artrites e cólicas, e para a redução da febre.");
+        info.setText("O pediatra é o médico especializado na assistência a crianças e adolescentes," +
+                " seja no aspecto preventivo ou curativo. O pediatra realiza consultas de rotina e " +
+                "acompanha o crescimento, mede e pesa a criança, para comparar com exames anteriores," +
+                " além de prevenir e tratar as possíveis enfermidades. ");
         ListView listview =(ListView) findViewById(R.id.listview);
        // List<String> units = new ArrayList<String>();
         String[] units = new String[10];

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.socialsaude.R;
+import com.socialsaude.utils.Constants;
 
 
 public class RightMenuActivity extends AppCompatActivity {
@@ -29,6 +30,7 @@ public class RightMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RightMenuActivity.this, ListActivity.class);
+                intent.putExtra("extra",Constants.GET_USERS);
                 startActivity(intent);
             }
         });
@@ -36,6 +38,7 @@ public class RightMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RightMenuActivity.this, ListActivity.class);
+                intent.putExtra("extra",Constants.GET_SPECIALISMS);
                 startActivity(intent);
             }
         });
@@ -43,6 +46,7 @@ public class RightMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RightMenuActivity.this, ListActivity.class);
+                intent.putExtra("extra",Constants.GET_UPAS);
                 startActivity(intent);
             }
         });
@@ -50,6 +54,7 @@ public class RightMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RightMenuActivity.this, ListActivity.class);
+                intent.putExtra("extra",Constants.GET_PDS);
                 startActivity(intent);
             }
         });
@@ -57,6 +62,7 @@ public class RightMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RightMenuActivity.this, ListActivity.class);
+                intent.putExtra("extra",Constants.GET_MEDICATIONS);
                 startActivity(intent);
             }
         });
@@ -64,6 +70,7 @@ public class RightMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RightMenuActivity.this, ListActivity.class);
+                intent.putExtra("extra",Constants.GET_HOSPITALS);
                 startActivity(intent);
             }
         });

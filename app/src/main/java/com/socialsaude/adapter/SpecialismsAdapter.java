@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.socialsaude.R;
 import com.socialsaude.socialsaudecommons.model.HealthUnit;
+import com.socialsaude.socialsaudecommons.model.Specialism;
 
 import java.util.List;
 
@@ -18,9 +19,9 @@ public class SpecialismsAdapter extends BaseAdapter {
 
     private Activity activity;
     private static LayoutInflater inflater=null;
-    private List<HealthUnit> items;
+    private List<Specialism> items;
 
-    public SpecialismsAdapter(Activity activity, List<HealthUnit> items) {
+    public SpecialismsAdapter(Activity activity, List<Specialism> items) {
         this.activity = activity;
         this.items=items;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -49,12 +50,12 @@ public class SpecialismsAdapter extends BaseAdapter {
         //TextView duration = (TextView)vi.findViewById(R.id.duration); // duration
         ImageView thumb_image=(ImageView)vi.findViewById(R.id.list_image); // thumb image
 
-        HealthUnit item = items.get(position);
+        Specialism item = items.get(position);
 
         // Setting all values in listview
         name.setText(item.getName());
-        address.setText(item.getStreet() + " - " + item.getCity());
-        expedient.setText(item.getOpenhours());
+        address.setText("");
+        expedient.setText("");
         //duration.setText(item);
         return vi;
     }
