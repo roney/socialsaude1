@@ -4,11 +4,13 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -49,6 +51,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.socialsaude.R;
 import com.socialsaude.adapter.UnitsAdapter;
 import com.socialsaude.api.SocialSaudeApi;
+import com.socialsaude.login.LoginActivity;
 import com.socialsaude.socialsaudecommons.model.HealthUnit;
 
 import java.util.ArrayList;
@@ -434,7 +437,14 @@ public class MainScreenSSActivity extends AppCompatActivity
 
                 return true;
             case R.id.nav_logout:
+                final SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = mPrefs.edit();
+                editor.putBoolean("isLoggedSharedPrefs", false);
+                editor.commit();
 
+                intent = new Intent(MainScreenSSActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
                 return true;
             default:
 

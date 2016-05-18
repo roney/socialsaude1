@@ -2,8 +2,10 @@ package com.socialsaude.login;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,7 +42,7 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        final SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         loginEditText = (EditText)findViewById(R.id.email_login);
         passwordEditText = (EditText)findViewById(R.id.password);
         Button mLoginButton = (Button) findViewById(R.id.login_button);
@@ -77,6 +79,10 @@ public class LoginActivity extends Activity {
                         Log.d("DebugLogin", response.message());
 //                        Log.d("DebugLogin", response.body());
                         if(response.message().equals("OK")) {
+                            SharedPreferences.Editor editor = mPrefs.edit();
+                            editor.putBoolean("isLoggedSharedPrefs", true);
+                            editor.commit();
+
                             Intent intent = new Intent(LoginActivity.this, MainScreenSSActivity.class);
                             startActivity(intent);
                         } else{
@@ -91,15 +97,6 @@ public class LoginActivity extends Activity {
                     }
                 });
 
-//                try {
-//                    boolean userExist = new LoginRequest(LoginActivity.this, email, password).execute("http://socialsaude.mybluemix.net/api/users/login").get();
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                } catch (ExecutionException e) {
-//                    e.printStackTrace();
-//                }
-//
-
 
             }
         });
@@ -108,8 +105,6 @@ public class LoginActivity extends Activity {
         mRegisterButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: cadastrar
-
                 Intent intent = new Intent();
                 intent.setClass(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
