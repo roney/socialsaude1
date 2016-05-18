@@ -23,11 +23,13 @@ import com.socialsaude.adapter.SpecialismsAdapter;
 import com.socialsaude.adapter.UnitsAdapter;
 import com.socialsaude.adapter.UsersAdapter;
 import com.socialsaude.api.SocialSaudeApi;
-import com.socialsaude.api.response.MedicationsResponse;
-import com.socialsaude.api.response.SpecialismsResponse;
-import com.socialsaude.api.response.UnitsResponse;
-import com.socialsaude.api.response.UsersResponse;
+import com.socialsaude.socialsaudecommons.model.HealthUnit;
+import com.socialsaude.socialsaudecommons.model.Medication;
+import com.socialsaude.socialsaudecommons.model.Specialism;
+import com.socialsaude.socialsaudecommons.model.User;
 import com.socialsaude.utils.Constants;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -89,13 +91,13 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private void getProfessionals(){
-        Call<UsersResponse> call = SocialSaudeApi.getClient(ListActivity.this).getUsers();
-        call.enqueue(new Callback<UsersResponse>() {
+        Call<List<User>> call = SocialSaudeApi.getClient(ListActivity.this).getUsers();
+        call.enqueue(new Callback<List<User>>() {
 
             @Override
-            public void onResponse(Call<UsersResponse> call, Response<UsersResponse> response) {
-                Log.i("DebugLogin", response.message());
-                adapter = new UsersAdapter(ListActivity.this, response.body().getBody());
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                Log.i("onResponse", response.message());
+                adapter = new UsersAdapter(ListActivity.this, response.body());
                 list.setAdapter(adapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -108,7 +110,7 @@ public class ListActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<UsersResponse> call, Throwable t) {
+            public void onFailure(Call<List<User>> call, Throwable t) {
                 Log.i("DebugLogin", "entrou onFailure");
                 Log.i("DebugLogin", t.getMessage());
             }
@@ -116,13 +118,13 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private void getMedications(){
-        Call<MedicationsResponse> call = SocialSaudeApi.getClient(ListActivity.this).getMedications();
-        call.enqueue(new Callback<MedicationsResponse>() {
+        Call<List<Medication>> call = SocialSaudeApi.getClient(ListActivity.this).getMedications();
+        call.enqueue(new Callback<List<Medication>>() {
 
             @Override
-            public void onResponse(Call<MedicationsResponse> call, Response<MedicationsResponse> response) {
+            public void onResponse(Call<List<Medication>> call, Response<List<Medication>> response) {
                 Log.i("DebugLogin", response.message());
-                adapter = new MedicationsAdapter(ListActivity.this, response.body().getBody());
+                adapter = new MedicationsAdapter(ListActivity.this, response.body());
                 list.setAdapter(adapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -135,20 +137,20 @@ public class ListActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<MedicationsResponse> call, Throwable t) {
+            public void onFailure(Call<List<Medication>> call, Throwable t) {
                 Log.i("DebugLogin", "entrou onFailure");
                 Log.i("DebugLogin", t.getMessage());
             }
         });
     }
     private void getUnits(){
-        Call<UnitsResponse> call = SocialSaudeApi.getClient(ListActivity.this).getUnits();
-        call.enqueue(new Callback<UnitsResponse>() {
+        Call<List<HealthUnit>> call = SocialSaudeApi.getClient(ListActivity.this).getUnits();
+        call.enqueue(new Callback<List<HealthUnit>>() {
 
             @Override
-            public void onResponse(Call<UnitsResponse> call, Response<UnitsResponse> response) {
+            public void onResponse(Call<List<HealthUnit>> call, Response<List<HealthUnit>> response) {
                 Log.i("DebugLogin", response.message());
-                adapter = new UnitsAdapter(ListActivity.this, response.body().getBody());
+                adapter = new UnitsAdapter(ListActivity.this, response.body());
                 list.setAdapter(adapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -161,7 +163,7 @@ public class ListActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<UnitsResponse> call, Throwable t) {
+            public void onFailure(Call<List<HealthUnit>> call, Throwable t) {
                 Log.i("DebugLogin", "entrou onFailure");
                 Log.i("DebugLogin", t.getMessage());
             }
@@ -169,14 +171,13 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private void getSpecialisms(){
-        Call<SpecialismsResponse> call = SocialSaudeApi.getClient(ListActivity.this).getSpecialisms();
-        call.enqueue(new Callback<SpecialismsResponse>() {
+        Call<List<Specialism>> call = SocialSaudeApi.getClient(ListActivity.this).getSpecialisms();
+        call.enqueue(new Callback<List<Specialism>>() {
 
             @Override
-            public void onResponse(Call<SpecialismsResponse> call, Response<SpecialismsResponse> response) {
+            public void onResponse(Call<List<Specialism>> call, Response<List<Specialism>> response) {
                 Log.i("DebugLogin", response.message());
-                Log.i("DebugLogin", response.body().getBody().get(0).getName());
-                adapter = new SpecialismsAdapter(ListActivity.this, response.body().getBody());
+                adapter = new SpecialismsAdapter(ListActivity.this, response.body());
                 list.setAdapter(adapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -189,7 +190,7 @@ public class ListActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<SpecialismsResponse> call, Throwable t) {
+            public void onFailure(Call<List<Specialism>> call, Throwable t) {
                 Log.i("DebugLogin", "entrou onFailure");
                 Log.i("DebugLogin", t.getMessage());
             }

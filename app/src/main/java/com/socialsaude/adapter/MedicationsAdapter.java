@@ -49,6 +49,8 @@ public class MedicationsAdapter extends BaseAdapter {
         TextView expedient = (TextView)vi.findViewById(R.id.expedient); // duration
         //TextView duration = (TextView)vi.findViewById(R.id.duration); // duration
         ImageView thumb_image=(ImageView)vi.findViewById(R.id.list_image); // thumb image
+        thumb_image.setImageResource(R.drawable.ic_default_medication);
+
 
         Medication item = items.get(position);
 

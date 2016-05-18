@@ -5,7 +5,7 @@ package com.socialsaude.utils;
  */
 public class Constants {
 
-    public static final String BASE_URL = "http://socialsaude.mybluemix.net/api/";
+    public static final String BASE_URL = "http://socialsaudeapp.mybluemix.net/api/";
 
     //Params Right Menu
     public static final String GET_USERS = "get_users";

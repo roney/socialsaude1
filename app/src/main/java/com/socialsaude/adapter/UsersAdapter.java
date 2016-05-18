@@ -49,12 +49,13 @@ public class UsersAdapter extends BaseAdapter {
         TextView expedient = (TextView)vi.findViewById(R.id.expedient); // duration
         //TextView duration = (TextView)vi.findViewById(R.id.duration); // duration
         ImageView thumb_image=(ImageView)vi.findViewById(R.id.list_image); // thumb image
+        thumb_image.setImageResource(R.drawable.ic_default_user);
 
         User item = items.get(position);
 
         // Setting all values in listview
         name.setText(item.getName());
-        address.setText(item.getEmail());
+        address.setText("Médico");
         expedient.setText(item.getBirthdate());
         //duration.setText(item);
         return vi;

@@ -10,7 +10,13 @@ import com.socialsaude.api.response.SpecialismsResponse;
 import com.socialsaude.api.response.UnitsResponse;
 import com.socialsaude.api.response.UsersResponse;
 import com.socialsaude.model.User;
+import com.socialsaude.socialsaudecommons.model.HealthProfessional;
+import com.socialsaude.socialsaudecommons.model.HealthUnit;
+import com.socialsaude.socialsaudecommons.model.Medication;
+import com.socialsaude.socialsaudecommons.model.Specialism;
 import com.socialsaude.utils.Constants;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -48,18 +54,18 @@ public class SocialSaudeApi {
         Call<String> createUser(@Body User user);
 
         @GET("users")
-        Call<UsersResponse> getUsers();
+        Call<List<com.socialsaude.socialsaudecommons.model.User>> getUsers();
 
         @GET("professionals")
-        Call<ProfessionalsReponse> getProfessionals();
+        Call<List<HealthProfessional>> getProfessionals();
 
         @GET("units")
-        Call<UnitsResponse> getUnits();
+        Call<List<HealthUnit>> getUnits();
 
         @GET("medications")
-        Call<MedicationsResponse> getMedications();
+        Call<List<Medication>> getMedications();
 
         @GET("specialisms")
-        Call<SpecialismsResponse> getSpecialisms();
+        Call<List<Specialism>> getSpecialisms();
     }
 }

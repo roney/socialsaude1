@@ -3,7 +3,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dip" >
+                android:padding="6dip" >
 
     <!--  ListRow Left sied Thumbnail image -->
     <LinearLayout android:id="@+id/thumbnail"
@@ -23,15 +23,15 @@
 
     <!-- Title-->
     <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/thumbnail"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:textColor="@color/black"
-        android:typeface="sans"
-        android:textSize="16dip"/>
-
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/black"
+            android:gravity="center_vertical"
+            android:typeface="sans"
+            android:textSize="18dip"/>
     <!-- Address -->
     <TextView
         android:id="@+id/address"
@@ -40,6 +40,7 @@
         android:layout_below="@id/title"
         android:textColor="@color/black"
         android:textSize="12dip"
+        android:visibility="gone"
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/thumbnail"/>
 
@@ -50,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/address"
         android:textColor="@color/grey"
+        android:visibility="gone"
         android:textSize="12dip"
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/thumbnail"/>
