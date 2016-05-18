@@ -73,10 +73,9 @@ public class MainScreenSSActivity extends AppCompatActivity
 
     private GoogleMap mMap;
     private LocationRequest mLocationRequest;
-    GoogleApiClient mGoogleApiClient;
-    Location mLastLocation;
-    Marker mCurrLocationMarker;
-    List<Marker> markerList;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
+    private List<Marker> markerList;
     private UiSettings mUiSettings;
 
     @Override
@@ -111,11 +110,15 @@ public class MainScreenSSActivity extends AppCompatActivity
         });
 
         //TODO Só para teste de adicionar e remover maker
-        FloatingActionButton floatingTest = (FloatingActionButton) findViewById(R.id.testMaker);
-        floatingTest.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton floatingMyLocation = (FloatingActionButton) findViewById(R.id.myLocation);
+        floatingMyLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeMarkerPointLocation();
+                if (mLastLocation != null) {
+                    LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(15.0f));
+                }
             }
         });
 
@@ -232,7 +235,7 @@ public class MainScreenSSActivity extends AppCompatActivity
         markerHospital.position(HOSPITAL);
         markerHospital.title("Hospital");
         markerHospital.snippet("IJF: Grande porte");
-        markerHospital.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        markerHospital.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
 
         //Exemplo de UPAs
         MarkerOptions markerUPA = new MarkerOptions();
@@ -246,7 +249,7 @@ public class MainScreenSSActivity extends AppCompatActivity
         markerPSaude.position(POSTO_DE_SAUDE);
         markerPSaude.title("Posto de Saúde");
         markerPSaude.snippet("PDS CC: Medio porte");
-        markerPSaude.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        markerPSaude.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
 
         markerOptionsList.add(markerHospital);
         markerOptionsList.add(markerUPA);
@@ -281,21 +284,13 @@ public class MainScreenSSActivity extends AppCompatActivity
     public void onLocationChanged(Location location)
     {
         mLastLocation = location;
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker.remove();
-        }
 
         //Place current location marker
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title(getString(R.string.minha_localizacao));
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
+        LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
 
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16.0f));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15.0f));
 
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
