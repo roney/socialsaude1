@@ -42,7 +42,7 @@ public class MedicationsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi=convertView;
         if(convertView==null)
-            vi = inflater.inflate(R.layout.list_row, null);
+            vi = inflater.inflate(R.layout.list_row_clean, null);
 
         TextView name = (TextView)vi.findViewById(R.id.title); // title
         TextView address = (TextView)vi.findViewById(R.id.address); // artist name

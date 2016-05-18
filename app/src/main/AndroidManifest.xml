@@ -70,33 +70,21 @@
             android:name=".activity.UnitsActivity"
             android:label="@string/title_activity_show"
             android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialsaude.activity.ListActivity"/>
         </activity>
         <activity
             android:name="com.socialsaude.activity.ProfessionalActivity"
             android:label="@string/title_activity_show"
             android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialsaude.activity.ListActivity"/>
         </activity>
         <activity
             android:name="com.socialsaude.activity.MedicationsActivity"
             android:label="@string/title_activity_show"
             android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialsaude.activity.ListActivity"/>
         </activity>
         <activity
             android:name="com.socialsaude.activity.SpecialitismsActivity"
             android:label="@string/title_activity_show"
             android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialsaude.activity.ListActivity"/>
         </activity>
 
     </application>

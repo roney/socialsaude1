@@ -41,6 +41,13 @@ public class ListActivity extends AppCompatActivity {
     private String mSearchQuery;
     private BaseAdapter adapter;
     private ListView list;
+    private List<User> medicals;
+    private List<Specialism> specialisms; //Especialidades
+    private List<HealthUnit> hospitals;
+    private List<HealthUnit> upas;
+    private List<HealthUnit> pds; //Postos de Saúde
+    private List<Medication> medications; //Postos de Saúde
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +58,7 @@ public class ListActivity extends AppCompatActivity {
        /* final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);*/
+        Log.i("Script", "---------onCreate--------------------");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
@@ -77,7 +85,7 @@ public class ListActivity extends AppCompatActivity {
                     getUnits();
                     break;
                 case Constants.GET_MEDICATIONS:
-                    getSupportActionBar().setTitle("Medicamentos");
+                    getSupportActionBar().setTitle("Remédios");
                     getMedications();
                     break;
                 case Constants.GET_HOSPITALS:
@@ -97,12 +105,16 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 Log.i("onResponse", response.message());
-                adapter = new UsersAdapter(ListActivity.this, response.body());
+                medicals = response.body();
+                adapter = new UsersAdapter(ListActivity.this, medicals);
                 list.setAdapter(adapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        User user = medicals.get(position);
                         Intent intent = new Intent(ListActivity.this, ProfessionalActivity.class);
+                        intent.putExtra("object", user);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(intent);
                     }
                 });
@@ -124,12 +136,15 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Medication>> call, Response<List<Medication>> response) {
                 Log.i("DebugLogin", response.message());
-                adapter = new MedicationsAdapter(ListActivity.this, response.body());
+                medications = response.body();
+                adapter = new MedicationsAdapter(ListActivity.this,medications );
                 list.setAdapter(adapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Medication medication = (Medication) medications.get(position);
                         Intent intent = new Intent(ListActivity.this, MedicationsActivity.class);
+                        intent.putExtra("object", medication);
                         startActivity(intent);
                     }
                 });
@@ -150,12 +165,15 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<HealthUnit>> call, Response<List<HealthUnit>> response) {
                 Log.i("DebugLogin", response.message());
-                adapter = new UnitsAdapter(ListActivity.this, response.body());
+                hospitals = response.body();
+                adapter = new UnitsAdapter(ListActivity.this, hospitals);
                 list.setAdapter(adapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        HealthUnit hospital = hospitals.get(position);
                         Intent intent = new Intent(ListActivity.this, UnitsActivity.class);
+                        intent.putExtra("object", hospital);
                         startActivity(intent);
                     }
                 });
@@ -177,12 +195,15 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Specialism>> call, Response<List<Specialism>> response) {
                 Log.i("DebugLogin", response.message());
-                adapter = new SpecialismsAdapter(ListActivity.this, response.body());
+                specialisms = response.body();
+                adapter = new SpecialismsAdapter(ListActivity.this, specialisms);
                 list.setAdapter(adapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Specialism specialism = specialisms.get(position);
                         Intent intent = new Intent(ListActivity.this, SpecialitismsActivity.class);
+                        intent.putExtra("object", specialism);
                         startActivity(intent);
                     }
                 });
