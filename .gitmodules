@@ -1,3 +1,6 @@
 [submodule "app/src/main/java/com/socialsaude/socialsaudecommons"]
 	path = app/src/main/java/com/socialsaude/socialsaudecommons
 	url = git@bitbucket.org:socialsaude/socialsaudecommons.git
+[submodule "socialsaudecommons"]
+	path = socialsaudecommons
+	url = https://bitbucket.org/socialsaude/socialsaudecommons
