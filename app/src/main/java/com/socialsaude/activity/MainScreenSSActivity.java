@@ -21,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -45,9 +46,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.socialsaude.R;
+import com.socialsaude.adapter.UnitsAdapter;
+import com.socialsaude.api.SocialSaudeApi;
+import com.socialsaude.socialsaudecommons.model.HealthUnit;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by italofeitosa on 04/05/2016.
@@ -154,7 +162,7 @@ public class MainScreenSSActivity extends AppCompatActivity
             mUiSettings.setMyLocationButtonEnabled(true);
             mMap.setMyLocationEnabled(true);
         }
-        mountMaker();
+        getUnits();
 
     }
 
@@ -227,36 +235,6 @@ public class MainScreenSSActivity extends AppCompatActivity
         });
     }
 
-    //TODO Metodo de teste para montar os Makers
-    private void mountMaker(){
-        List<MarkerOptions> markerOptionsList = new ArrayList<>();
-        //Exemplo de hospitais
-        MarkerOptions markerHospital = new MarkerOptions();
-        markerHospital.position(HOSPITAL);
-        markerHospital.title("Hospital");
-        markerHospital.snippet("IJF: Grande porte");
-        markerHospital.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-
-        //Exemplo de UPAs
-        MarkerOptions markerUPA = new MarkerOptions();
-        markerUPA.position(UPA);
-        markerUPA.title("UPA");
-        markerUPA.snippet("Conjunto Ceara: Pequeno porte");
-        markerUPA.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-
-        //Exemplo de Posto de Saude
-        MarkerOptions markerPSaude = new MarkerOptions();
-        markerPSaude.position(POSTO_DE_SAUDE);
-        markerPSaude.title("Posto de Saúde");
-        markerPSaude.snippet("PDS CC: Medio porte");
-        markerPSaude.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-
-        markerOptionsList.add(markerHospital);
-        markerOptionsList.add(markerUPA);
-        markerOptionsList.add(markerPSaude);
-        addMarkerPointsLocation(markerOptionsList);
-    }
-
     private void addMarkerPointsLocation (List<MarkerOptions> markerOptionsList){
         for (MarkerOptions markerOptions : markerOptionsList) {
             Marker marker = mMap.addMarker(markerOptions);
@@ -269,6 +247,46 @@ public class MainScreenSSActivity extends AppCompatActivity
             markerList.get(i).remove();
         }
     }
+
+
+    private void getUnits(){
+        Call<List<HealthUnit>> call = SocialSaudeApi.getClient(MainScreenSSActivity.this).getUnits();
+        call.enqueue(new Callback<List<HealthUnit>>() {
+
+            @Override
+            public void onResponse(Call<List<HealthUnit>> call, Response<List<HealthUnit>> response) {
+                Log.i("POINT", response.message());
+                List<HealthUnit> units = response.body();
+                List<MarkerOptions> markerOptionsList = new ArrayList<>();
+                if(!units.isEmpty()){
+                    for (int i = 0; i <units.size() ; i++) {
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        LatLng position = new LatLng(Double.valueOf(units.get(i).getLatitude()), Double.valueOf(units.get(i).getLongitude()));
+                        markerOptions.position(position);
+                        markerOptions.title(units.get(i).getName());
+                        markerOptions.snippet(units.get(i).getDescription());
+                        if(units.get(i).getSpecification().equals("HOSPITAL")){
+                            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                        }else if(units.get(i).getSpecification().equals("UPA")){
+                            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                        }else{
+                            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                        }
+                        markerOptionsList.add(markerOptions);
+                    }
+                    addMarkerPointsLocation(markerOptionsList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<HealthUnit>> call, Throwable t) {
+                Log.i("POINT", "entrou onFailure");
+                Log.i("POINT", t.getMessage());
+            }
+        });
+    }
+
+
 
     @Override
     public void onConnectionSuspended(int i) {

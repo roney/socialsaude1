@@ -29,6 +29,7 @@ import com.socialsaude.socialsaudecommons.model.Specialism;
 import com.socialsaude.socialsaudecommons.model.User;
 import com.socialsaude.utils.Constants;
 
+import java.io.Serializable;
 import java.util.List;
 
 import retrofit2.Call;
@@ -113,7 +114,7 @@ public class ListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         User user = medicals.get(position);
                         Intent intent = new Intent(ListActivity.this, ProfessionalActivity.class);
-                        intent.putExtra("object", user);
+                        intent.putExtra("object", (Serializable) user);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(intent);
                     }
@@ -144,7 +145,7 @@ public class ListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Medication medication = (Medication) medications.get(position);
                         Intent intent = new Intent(ListActivity.this, MedicationsActivity.class);
-                        intent.putExtra("object", medication);
+                        intent.putExtra("object", (Serializable) medication);
                         startActivity(intent);
                     }
                 });
@@ -173,7 +174,7 @@ public class ListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         HealthUnit hospital = hospitals.get(position);
                         Intent intent = new Intent(ListActivity.this, UnitsActivity.class);
-                        intent.putExtra("object", hospital);
+                        intent.putExtra("object", (Serializable) hospital);
                         startActivity(intent);
                     }
                 });
@@ -203,7 +204,7 @@ public class ListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Specialism specialism = specialisms.get(position);
                         Intent intent = new Intent(ListActivity.this, SpecialitismsActivity.class);
-                        intent.putExtra("object", specialism);
+                        intent.putExtra("object", (Serializable) specialism);
                         startActivity(intent);
                     }
                 });
