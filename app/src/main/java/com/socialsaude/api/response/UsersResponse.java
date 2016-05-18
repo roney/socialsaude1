@@ -1,5 +1,9 @@
 package com.socialsaude.api.response;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import com.socialsaude.socialsaudecommons.model.HealthProfessional;
+import com.socialsaude.socialsaudecommons.model.Specialism;
 import com.socialsaude.socialsaudecommons.model.User;
 
 import java.util.List;
@@ -9,22 +13,35 @@ import java.util.List;
  */
 public class UsersResponse {
 
-    private String id;
 
-    public String getId() {
-        return id;
+    @SerializedName("health_professional")
+    private HealthProfessional healthProfessional;
+
+    private User user;
+
+    private Specialism specialism;
+
+    public HealthProfessional getHealthProfessional() {
+        return healthProfessional;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-    private List<User> body;
-
-    public List<User> getBody() {
-        return body;
+    public void setHealthProfessional(HealthProfessional healthProfessional) {
+        this.healthProfessional = healthProfessional;
     }
 
-    public void setBody(List<User> body) {
-        this.body = body;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Specialism getSpecialism() {
+        return specialism;
+    }
+
+    public void setSpecialism(Specialism specialism) {
+        this.specialism = specialism;
     }
 }

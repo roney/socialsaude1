@@ -46,7 +46,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_screen_ss">Social Saúde</string>
-    <string name="title_activity_right_menu">Acesso Rápido</string>
+    <string name="title_activity_right_menu">Procurar por</string>
     <string name="title_activity_list">Médicos</string>
     <string name="title_activity_show">ShowActivity</string>
 

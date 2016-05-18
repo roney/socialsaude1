@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -11,10 +12,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.socialsaude.R;
+import com.socialsaude.api.SocialSaudeApi;
+import com.socialsaude.socialsaudecommons.model.HealthUnit;
 import com.socialsaude.socialsaudecommons.model.Medication;
 import com.socialsaude.socialsaudecommons.model.Specialism;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class SpecialitismsActivity extends AppCompatActivity {
+
+    private ListView listview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +45,34 @@ public class SpecialitismsActivity extends AppCompatActivity {
             Specialism specialism = (Specialism) getIntent().getSerializableExtra("object");
             collapsingToolbar.setTitle(specialism.getName());
             info.setText(specialism.getDecription());
-            ListView listview =(ListView) findViewById(R.id.listview);
-            String[] units = new String[10];
-            units[0] = ("Hospital I");
-            units[1] = ("Hospital II");
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, units);
-            listview.setAdapter(adapter);
+            listview =(ListView) findViewById(R.id.listview);
+            getUnits(specialism.get_id());
 
         }
+    }
+
+    private void getUnits(String id){
+        Call<List<HealthUnit>> call = SocialSaudeApi.getClient(SpecialitismsActivity.this).getUnitsBySpecialism(id);
+        call.enqueue(new Callback<List<HealthUnit>>() {
+
+            @Override
+            public void onResponse(Call<List<HealthUnit>> call, Response<List<HealthUnit>> response) {
+                Log.i("DebugLogin", response.message());
+                List<String> units = new ArrayList<String>();
+                for(HealthUnit unit:response.body()){
+                    units.add(unit.getName());
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(SpecialitismsActivity.this, android.R.layout.simple_list_item_1, units);
+                listview.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<HealthUnit>> call, Throwable t) {
+                Log.i("DebugLogin", "entrou onFailure");
+                Log.i("DebugLogin", t.getMessage());
+            }
+        });
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -24,6 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -59,8 +60,20 @@ public class SocialSaudeApi {
         @GET("professionals")
         Call<List<HealthProfessional>> getProfessionals();
 
+        @GET("professionals/all")
+        Call<List<UsersResponse>> getAll();
+
         @GET("units")
         Call<List<HealthUnit>> getUnits();
+
+        @GET("units/medication/{id}")
+        Call<List<HealthUnit>> getUnitsByMedication(@Path("id") String id);
+
+        @GET("units/specialism/{id}")
+        Call<List<HealthUnit>> getUnitsBySpecialism(@Path("id") String id);
+
+        @GET("units/professional/{id}")
+        Call<List<HealthUnit>> getUnitsByProfessional(@Path("id") String stringId);
 
         @GET("medications")
         Call<List<Medication>> getMedications();

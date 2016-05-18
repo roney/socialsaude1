@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -19,6 +20,9 @@ public class RightMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_right_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
         LinearLayout op1 = (LinearLayout) findViewById(R.id.menuOption1);
         LinearLayout op2 = (LinearLayout) findViewById(R.id.menuOption2);
@@ -75,6 +79,15 @@ public class RightMenuActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            default:
+                super.onBackPressed();  // optional depending on your needs
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
