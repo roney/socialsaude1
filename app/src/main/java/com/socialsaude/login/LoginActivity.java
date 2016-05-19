@@ -103,7 +103,7 @@ public class LoginActivity extends Activity {
                 startActivity(intent);
             }
         });
-        TextView mForgotPasswordButton = (TextView) findViewById(R.id.forgot_password_tv);
+        /*TextView mForgotPasswordButton = (TextView) findViewById(R.id.forgot_password_tv);
         mForgotPasswordButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,7 +111,7 @@ public class LoginActivity extends Activity {
                 intent.setClass(LoginActivity.this, ForgotPasswordActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
     }
     public String md5(String s) {
         try {

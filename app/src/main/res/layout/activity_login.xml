@@ -79,7 +79,7 @@
                 android:background="@drawable/buttonblue"
                 />
 
-            <TextView
+           <!-- <TextView
                 android:id="@+id/forgot_password_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
                 android:textSize="20sp"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
-                />
+                />-->
 
             <Button
                 android:id="@+id/register_button"
