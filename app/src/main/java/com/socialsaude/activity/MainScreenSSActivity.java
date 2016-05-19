@@ -10,6 +10,8 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +26,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
@@ -289,7 +293,9 @@ public class MainScreenSSActivity extends AppCompatActivity
                         }
                         markerOptionsList.add(markerOptions);
                     }
-                    addMarkerPointsLocation(markerOptionsList);
+                    if(mMap != null){
+                        addMarkerPointsLocation(markerOptionsList);
+                    }
                 }
             }
 
@@ -491,7 +497,28 @@ public class MainScreenSSActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onMarkerClick(Marker marker) {
+    public boolean onMarkerClick(final Marker marker) {
+
+        final Handler handler = new Handler();
+        final long start = SystemClock.uptimeMillis();
+        final long duration = 1500;
+
+        final Interpolator interpolator = new BounceInterpolator();
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                long elapsed = SystemClock.uptimeMillis() - start;
+                float t = Math.max(
+                        1 - interpolator.getInterpolation((float) elapsed / duration), 0);
+                marker.setAnchor(0.5f, 1.0f + 2 * t);
+
+                if (t > 0.0) {
+                    // Post again 16ms later.
+                    handler.postDelayed(this, 16);
+                }
+            }
+        });
 
         return false;
     }

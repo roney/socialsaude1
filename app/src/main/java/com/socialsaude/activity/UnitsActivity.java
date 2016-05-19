@@ -39,7 +39,8 @@ public class UnitsActivity extends AppCompatActivity {
             collapsingToolbar.setTitle(unit.getName());
             address.setText(unit.getStreet() + " - " + unit.getCity());
             openHours.setText(unit.getOpenhours());
-            contact.setText(unit.getPhone() + (unit.getOptionalPhone()==null?"":" - ") + unit.getOptionalPhone());
+
+            contact.setText((unit.getPhone() == null? "":unit.getPhone()) + " - " + (unit.getOptionalPhone()==null?"":unit.getOptionalPhone()));
             email.setText(unit.getEmail());
             steps.setText(unit.getProceedings());
             info.setText(unit.getInfo());

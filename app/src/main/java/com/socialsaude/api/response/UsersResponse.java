@@ -6,12 +6,13 @@ import com.socialsaude.socialsaudecommons.model.HealthProfessional;
 import com.socialsaude.socialsaudecommons.model.Specialism;
 import com.socialsaude.socialsaudecommons.model.User;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by reis on 16/05/16.
  */
-public class UsersResponse {
+public class UsersResponse implements Serializable {
 
 
     @SerializedName("health_professional")
