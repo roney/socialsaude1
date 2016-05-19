@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/white"
-                android:textSize="26sp"
+                android:textSize="24sp"
                 android:gravity="center|bottom"
                 android:layout_gravity="bottom"
                 android:fontFamily="sans-serif-thin"
@@ -155,12 +155,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/white"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 android:gravity="center|bottom"
                 android:layout_gravity="bottom"
                 android:fontFamily="sans-serif-thin"
                 android:layout_weight="0.5"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/menu_pdss"/>
 
             <TextView
