@@ -49,7 +49,9 @@ public class LoginActivity extends Activity {
         mLoginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(LoginActivity.this, MainScreenSSActivity.class);
+                startActivity(intent);
+                startActivity(intent);
                 Gson gson = new GsonBuilder()
                         .setLenient()
                         .create();
