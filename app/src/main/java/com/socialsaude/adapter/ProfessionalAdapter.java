@@ -40,6 +40,19 @@ public class ProfessionalAdapter extends BaseAdapter {
         return position;
     }
 
+    public void delete(int position){
+        items.remove(position);
+    }
+    public void addMoreItems(List<UsersResponse> newItems) {
+        this.items.addAll(newItems);
+        notifyDataSetChanged();
+    }
+
+    public void removeAllItems() {
+        this.items.clear();
+        notifyDataSetChanged();
+    }
+
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi=convertView;
         if(convertView==null)

@@ -1,9 +1,11 @@
 package com.socialsaude.activity;
 
 import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -38,6 +40,8 @@ import com.socialsaude.socialsaudecommons.model.Specialism;
 import com.socialsaude.socialsaudecommons.model.User;
 import com.socialsaude.utils.Constants;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.io.Serializable;
 import java.util.List;
@@ -46,21 +50,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     private boolean mSearchOpened;
     private String mSearchQuery;
-    private BaseAdapter adapter;
+    private ProfessionalAdapter professionalAdapter;
+    private UnitsAdapter unitsAdapter;
+    private SpecialismsAdapter specialismsAdapter;
+    private MedicationsAdapter medicationsAdapter;
     private ListView list;
-    private List<User> medicals;
     private List<UsersResponse> allMedicals;
     private List<Specialism> specialisms; //Especialidades
     private List<HealthUnit> hospitals = new ArrayList<HealthUnit>();
     private List<Medication> medications; //Postos de Saúde
+    private String params = "";
 
-    private MenuItem mSearchAction;
-    private boolean isSearchOpened = false;
-    private EditText edtSeach;
 
 
     @Override
@@ -79,7 +83,7 @@ public class ListActivity extends AppCompatActivity {
         list=(ListView)findViewById(R.id.list);
 
         if(getIntent().hasExtra("extra")){
-            String params = getIntent().getStringExtra("extra");
+            params = getIntent().getStringExtra("extra");
             switch (params) {
                 case Constants.GET_USERS:
                     getSupportActionBar().setTitle("Médicos");
@@ -111,7 +115,6 @@ public class ListActivity extends AppCompatActivity {
 
     }
 
-
     private void getAll(){
         Call<List<UsersResponse>> call = SocialSaudeApi.getClient(ListActivity.this).getAll();
         call.enqueue(new Callback<List<UsersResponse>>() {
@@ -123,8 +126,8 @@ public class ListActivity extends AppCompatActivity {
                 Log.i("onResponse", allMedicals.get(0).getHealthProfessional().toString());
                 Log.i("onResponse", allMedicals.get(0).getSpecialism().toString());
 
-                adapter = new ProfessionalAdapter(ListActivity.this,allMedicals );
-                list.setAdapter(adapter);
+                professionalAdapter = new ProfessionalAdapter(ListActivity.this,allMedicals );
+                list.setAdapter(professionalAdapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -146,39 +149,6 @@ public class ListActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void getProfessionals(){
-        Call<List<User>> call = SocialSaudeApi.getClient(ListActivity.this).getUsers();
-        call.enqueue(new Callback<List<User>>() {
-
-            @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                Log.i("onResponse", response.message());
-                medicals = response.body();
-                adapter = new UsersAdapter(ListActivity.this, medicals);
-                list.setAdapter(adapter);
-                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        User user = medicals.get(position);
-                        Intent intent = new Intent(ListActivity.this, ProfessionalActivity.class);
-                        intent.putExtra("object", user);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        startActivity(intent);
-                    }
-                });
-
-            }
-
-            @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-                Log.i("DebugLogin", "entrou onFailure");
-                Log.i("DebugLogin", t.getMessage());
-            }
-        });
-    }
-
-
     private void getMedications(){
 
         Call<List<Medication>> call = SocialSaudeApi.getClient(ListActivity.this).getMedications();
@@ -188,8 +158,8 @@ public class ListActivity extends AppCompatActivity {
             public void onResponse(Call<List<Medication>> call, Response<List<Medication>> response) {
                 Log.i("DebugLogin", response.message());
                 medications = response.body();
-                adapter = new MedicationsAdapter(ListActivity.this, medications);
-                list.setAdapter(adapter);
+                medicationsAdapter = new MedicationsAdapter(ListActivity.this, medications);
+                list.setAdapter(medicationsAdapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -216,13 +186,13 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<HealthUnit>> call, Response<List<HealthUnit>> response) {
                 Log.i("DebugLogin", response.message());
-                for(HealthUnit u:response.body()){
-                    if(u.getSpecification().equals(specification)){
+                for (HealthUnit u : response.body()) {
+                    if (u.getSpecification().equals(specification)) {
                         hospitals.add(u);
                     }
                 }
-                adapter = new UnitsAdapter(ListActivity.this, hospitals);
-                list.setAdapter(adapter);
+                unitsAdapter = new UnitsAdapter(ListActivity.this, hospitals);
+                list.setAdapter(unitsAdapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -242,7 +212,6 @@ public class ListActivity extends AppCompatActivity {
             }
         });
     }
-
     private void getSpecialisms(){
         Call<List<Specialism>> call = SocialSaudeApi.getClient(ListActivity.this).getSpecialisms();
         call.enqueue(new Callback<List<Specialism>>() {
@@ -251,8 +220,8 @@ public class ListActivity extends AppCompatActivity {
             public void onResponse(Call<List<Specialism>> call, Response<List<Specialism>> response) {
                 Log.i("DebugLogin", response.message());
                 specialisms = response.body();
-                adapter = new SpecialismsAdapter(ListActivity.this, specialisms);
-                list.setAdapter(adapter);
+                specialismsAdapter = new SpecialismsAdapter(ListActivity.this, specialisms);
+                list.setAdapter(specialismsAdapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -277,98 +246,179 @@ public class ListActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_list, menu);
+        // Get the SearchView and set the searchable configuration
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(this);
 
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(
+                new ComponentName(this, ListActivity.class)));
+        searchView.setIconifiedByDefault(true);
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                Log.i("Script", "onClose:" + params);
+                switch (params) {
+                    case Constants.GET_USERS:
+                        professionalAdapter.removeAllItems();
+                        professionalAdapter.addMoreItems(allMedicals);
+                        return false;
+                    case Constants.GET_SPECIALISMS:
+                        specialismsAdapter.removeAllItems();
+                        specialismsAdapter.addMoreItems(specialisms);
+                        return false;
+                    case Constants.GET_MEDICATIONS:
+                        medicationsAdapter.removeAllItems();
+                        medicationsAdapter.addMoreItems(medications);
+                        return false;
+                    default:
+                        unitsAdapter.removeAllItems();
+                        unitsAdapter.addMoreItems(hospitals);
+                        return false;
+                }
+            }
+        });
         return true;
 
     }
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        Toast.makeText(ListActivity.this, "onOptionsItemSelected: ", Toast.LENGTH_SHORT).show();
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
-        switch (id) {
-            case R.id.action_search:
-                handleMenuSearch();
-                return true;
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        switch (params) {
+            case Constants.GET_USERS:
+                searchUser(query);
+                break;
+            case Constants.GET_SPECIALISMS:
+                searchSpecialism(query);
+                break;
+            case Constants.GET_MEDICATIONS:
+                searchMedications(query);
+                break;
+            default:
+                searchUnit(query);
+                break;
+        }
+        return false;
+    }
+
+    private void searchUser(String query){
+        List<UsersResponse> users = new ArrayList<UsersResponse>();
+        Log.i("Script", "searchUser");
+        if(query!=null && query.length()>0 && professionalAdapter!=null){
+            for(int i=0 ; i<professionalAdapter.getCount() ; i++){
+                View v = getViewByPosition(i);
+                TextView name = (TextView)v.findViewById(R.id.title);
+                if(name.getText().toString().trim().contains(query.trim())){
+                    Log.i("Script", "text: " + name.getText());
+                    users.add(allMedicals.get(i));
+                }
+            }
+            if(users.size()>0){
+                professionalAdapter.removeAllItems();
+                professionalAdapter.addMoreItems(users);
+            }else{
+                professionalAdapter.removeAllItems();
+                professionalAdapter.addMoreItems(allMedicals);
+            }
+
         }
 
-        return super.onOptionsItemSelected(item);
     }
-    @   Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        mSearchAction = menu.findItem(R.id.action_search);
-        return super.onPrepareOptionsMenu(menu);
-    }
-    protected void handleMenuSearch(){
-        ActionBar action = getSupportActionBar(); //get the actionbar
-        Toast.makeText(ListActivity.this, "kkkkkk: ", Toast.LENGTH_SHORT).show();
-
-        if(isSearchOpened){ //test if the search is open
-
-            action.setDisplayShowCustomEnabled(false); //disable a custom view inside the actionbar
-            action.setDisplayShowTitleEnabled(true); //show the title in the action bar
-
-            //hides the keyboard
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(edtSeach.getWindowToken(), 0);
-
-            //add the search icon in the action bar
-            mSearchAction.setIcon(getResources().getDrawable(R.drawable.ic_search_white));
-
-            isSearchOpened = false;
-        } else { //open the search entry
-
-            action.setDisplayShowCustomEnabled(true); //enable it to display a
-            // custom view in the action bar.
-            action.setCustomView(R.layout.search_bar);//add the custom view
-            action.setDisplayShowTitleEnabled(false); //hide the title
-
-            edtSeach = (EditText)action.getCustomView().findViewById(R.id.edtSearch); //the text editor
-
-            //this is a listener to do a search when the user clicks on search button
-            edtSeach.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    Toast.makeText(ListActivity.this, "Digitado: ", Toast.LENGTH_SHORT).show();
-                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                        doSearch();
-                        return true;
-                    }
-                    return false;
+    private void searchSpecialism(String query){
+        List<Specialism> sp = new ArrayList<Specialism>();
+        if(query!=null && query.length()>0 && specialismsAdapter!=null){
+            for(int i=0 ; i<specialismsAdapter.getCount() ; i++){
+                View v = getViewByPosition(i);
+                TextView name = (TextView)v.findViewById(R.id.title);
+                if(name.getText().toString().trim().contains(query.trim())){
+                    sp.add(specialisms.get(i));
                 }
-            });
+            }
+            if(sp.size()>0){
+                specialismsAdapter.removeAllItems();
+                specialismsAdapter.addMoreItems(sp);
+            }else{
+                specialismsAdapter.removeAllItems();
+                specialismsAdapter.addMoreItems(specialisms);
+            }
 
+        }
+        if(query==null){
+            specialismsAdapter.removeAllItems();
+            specialismsAdapter.addMoreItems(specialisms);
+        }
+    }
+    private void searchMedications(String query){
+        List<Medication> md = new ArrayList<Medication>();
+        if(query!=null && query.length()>0 && medicationsAdapter!=null){
+            for(int i=0 ; i<medicationsAdapter.getCount() ; i++){
+                View v = getViewByPosition(i);
+                TextView name = (TextView)v.findViewById(R.id.title);
+                if(name.getText().toString().trim().contains(query.trim())){
+                    md.add(medications.get(i));
+                }
+            }
+            if(md.size()>0){
+                medicationsAdapter.removeAllItems();
+                medicationsAdapter.addMoreItems(md);
+            }else{
+                medicationsAdapter.removeAllItems();
+                medicationsAdapter.addMoreItems(medications);
+            }
+        }
+        if(query==null){
+            medicationsAdapter.removeAllItems();
+            medicationsAdapter.addMoreItems(medications);
+        }
+    }
+    private void searchUnit(String query){
+        List<HealthUnit> healthUnits = new ArrayList<HealthUnit>();
+        if(query!=null && query.length()>0 && unitsAdapter!=null){
+            for(int i=0 ; i<unitsAdapter.getCount() ; i++){
+                View v = getViewByPosition(i);
+                TextView name = (TextView)v.findViewById(R.id.title);
+                if(name.getText().toString().trim().contains(query.trim())){
+                    healthUnits.add(hospitals.get(i));
+                }
+            }
+            if(healthUnits.size()>0){
+                unitsAdapter.removeAllItems();
+                unitsAdapter.addMoreItems(healthUnits);
+            }else{
+                unitsAdapter.removeAllItems();
+                unitsAdapter.addMoreItems(hospitals);
+            }
 
-            edtSeach.requestFocus();
-
-            //open the keyboard focused in the edtSearch
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(edtSeach, InputMethodManager.SHOW_IMPLICIT);
-
-
-            //add the close icon
-            mSearchAction.setIcon(getResources().getDrawable(R.drawable.ic_call_black));
-
-            isSearchOpened = true;
+        }
+        if(query==null){
+            unitsAdapter.removeAllItems();
+            unitsAdapter.addMoreItems(hospitals);
         }
     }
 
     @Override
-    public void onBackPressed() {
-        if(isSearchOpened) {
-            handleMenuSearch();
-            return;
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
+    public View getViewByPosition(int pos) {
+        final int firstListItemPosition = list.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + list.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+            return list.getAdapter().getView(pos, null, list);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return list.getChildAt(childIndex);
         }
-        super.onBackPressed();
     }
-    private void doSearch() {
-        Toast.makeText(ListActivity.this, "Digitado: ", Toast.LENGTH_SHORT).show();
-    }
-
-
 }

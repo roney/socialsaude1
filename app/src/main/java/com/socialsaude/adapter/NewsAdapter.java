@@ -10,31 +10,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.socialsaude.R;
-import com.socialsaude.api.response.UsersResponse;
-import com.socialsaude.socialsaudecommons.model.HealthUnit;
-import com.socialsaude.socialsaudecommons.model.Medication;
+import com.socialsaude.socialsaudecommons.model.Article;
 
 import java.util.List;
 
-public class MedicationsAdapter extends BaseAdapter {
+public class NewsAdapter extends BaseAdapter {
 
     private Activity activity;
     private static LayoutInflater inflater=null;
-    private List<Medication> items;
+    private List<Article> items;
 
-    public MedicationsAdapter(Activity activity, List<Medication> items) {
+    public NewsAdapter(Activity activity, List<Article> items) {
         this.activity = activity;
         this.items=items;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-    public void addMoreItems(List<Medication> newItems) {
-        this.items=newItems;
-        notifyDataSetChanged();
-    }
-
-    public void removeAllItems() {
-        this.items.clear();
-        notifyDataSetChanged();
     }
 
     public int getCount() {
@@ -59,15 +48,13 @@ public class MedicationsAdapter extends BaseAdapter {
         TextView expedient = (TextView)vi.findViewById(R.id.expedient); // duration
         //TextView duration = (TextView)vi.findViewById(R.id.duration); // duration
         ImageView thumb_image=(ImageView)vi.findViewById(R.id.list_image); // thumb image
-        thumb_image.setImageResource(R.drawable.ic_default_medication);
-
-
-        Medication item = items.get(position);
+        thumb_image.setImageResource(R.drawable.ic_default_news);
+        Article item = items.get(position);
 
         // Setting all values in listview
-        name.setText(item.getName());
-        address.setText(item.getDescription());
-        expedient.setText("");
+        name.setText(item.getTitle());
+        //address.setText(item.get);
+        //expedient.setText(item.getExpedient());
         //duration.setText(item);
         return vi;
     }

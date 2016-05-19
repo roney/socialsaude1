@@ -10,6 +10,7 @@ import com.socialsaude.api.response.SpecialismsResponse;
 import com.socialsaude.api.response.UnitsResponse;
 import com.socialsaude.api.response.UsersResponse;
 import com.socialsaude.model.User;
+import com.socialsaude.socialsaudecommons.model.Article;
 import com.socialsaude.socialsaudecommons.model.HealthProfessional;
 import com.socialsaude.socialsaudecommons.model.HealthUnit;
 import com.socialsaude.socialsaudecommons.model.Medication;
@@ -62,6 +63,9 @@ public class SocialSaudeApi {
 
         @GET("professionals/all")
         Call<List<UsersResponse>> getAll();
+
+        @GET("articles")
+        Call<List<Article>> getNews();
 
         @GET("units")
         Call<List<HealthUnit>> getUnits();

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.socialsaude.R;
+import com.socialsaude.api.response.UsersResponse;
 import com.socialsaude.socialsaudecommons.model.HealthUnit;
 import com.socialsaude.socialsaudecommons.model.User;
 
@@ -25,6 +26,15 @@ public class UnitsAdapter extends BaseAdapter {
         this.activity = activity;
         this.items=items;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+    public void addMoreItems(List<HealthUnit> newItems) {
+        this.items.addAll(newItems);
+        notifyDataSetChanged();
+    }
+
+    public void removeAllItems() {
+        this.items.clear();
+        notifyDataSetChanged();
     }
 
     public int getCount() {

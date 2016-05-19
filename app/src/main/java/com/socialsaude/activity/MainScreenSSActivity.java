@@ -433,6 +433,10 @@ public class MainScreenSSActivity extends AppCompatActivity
                 }
                 startActivity(intent);
                 return true;
+            case R.id.nav_news:
+                Intent i = new Intent(MainScreenSSActivity.this, NewsActivity.class);
+                startActivity(i);
+                return true;
             case R.id.nav_about:
 
                 return true;
