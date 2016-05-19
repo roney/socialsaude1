@@ -54,6 +54,7 @@ import com.socialsaude.api.SocialSaudeApi;
 import com.socialsaude.login.LoginActivity;
 import com.socialsaude.socialsaudecommons.model.HealthUnit;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +71,11 @@ public class MainScreenSSActivity extends AppCompatActivity
         OnMapReadyCallback,
         NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+        LocationListener,
+        GoogleMap.OnMarkerClickListener,
+        GoogleMap.OnInfoWindowClickListener,
+        GoogleMap.OnInfoWindowCloseListener,
+        GoogleMap.OnInfoWindowLongClickListener {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -87,6 +92,7 @@ public class MainScreenSSActivity extends AppCompatActivity
     private Location mLastLocation;
     private List<Marker> markerList;
     private UiSettings mUiSettings;
+    List<HealthUnit> healthUnits;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +155,14 @@ public class MainScreenSSActivity extends AppCompatActivity
         mUiSettings = mMap.getUiSettings();
 
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        //mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+
+        // Set listeners for marker events.  See the bottom of this class for their behavior.
+        mMap.setOnMarkerClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
+        //mMap.setOnMarkerDragListener(this);
+        mMap.setOnInfoWindowCloseListener(this);
+        mMap.setOnInfoWindowLongClickListener(this);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
@@ -257,18 +271,18 @@ public class MainScreenSSActivity extends AppCompatActivity
             @Override
             public void onResponse(Call<List<HealthUnit>> call, Response<List<HealthUnit>> response) {
                 Log.i("POINT", response.message());
-                List<HealthUnit> units = response.body();
+                healthUnits = response.body();
                 List<MarkerOptions> markerOptionsList = new ArrayList<>();
-                if (!units.isEmpty()) {
-                    for (int i = 0; i < units.size(); i++) {
+                if (!healthUnits.isEmpty()) {
+                    for (int i = 0; i < healthUnits.size(); i++) {
                         MarkerOptions markerOptions = new MarkerOptions();
-                        LatLng position = new LatLng(Double.valueOf(units.get(i).getLatitude()), Double.valueOf(units.get(i).getLongitude()));
+                        LatLng position = new LatLng(Double.valueOf(healthUnits.get(i).getLatitude()), Double.valueOf(healthUnits.get(i).getLongitude()));
                         markerOptions.position(position);
-                        markerOptions.title(units.get(i).getName());
-                        markerOptions.snippet(units.get(i).getDescription());
-                        if (units.get(i).getSpecification().equals("HOSPITAL")) {
+                        markerOptions.title(healthUnits.get(i).getName());
+                        markerOptions.snippet(healthUnits.get(i).getDescription());
+                        if (healthUnits.get(i).getSpecification().equals("HOSPITAL")) {
                             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                        } else if (units.get(i).getSpecification().equals("UPA")) {
+                        } else if (healthUnits.get(i).getSpecification().equals("UPA")) {
                             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                         } else {
                             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
@@ -470,5 +484,34 @@ public class MainScreenSSActivity extends AppCompatActivity
     @Override
     public void onLowMemory() {
         super.onLowMemory();
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+
+        return false;
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        HealthUnit unit = null;
+        for (int i = 0; i < healthUnits.size(); i++) {
+            if(marker.getTitle().equals(healthUnits.get(i).getName())) {
+                unit = healthUnits.get(i);
+            }
+        }
+        if(unit != null) {
+            Intent intent = new Intent(MainScreenSSActivity.this, UnitsActivity.class);
+            intent.putExtra("object", unit);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onInfoWindowClose(Marker marker) {
+    }
+
+    @Override
+    public void onInfoWindowLongClick(Marker marker) {
     }
 }

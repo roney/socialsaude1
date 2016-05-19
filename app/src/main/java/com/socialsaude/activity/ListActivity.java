@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -130,9 +131,9 @@ public class ListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         UsersResponse usersResponse = allMedicals.get(position);
                         Intent intent = new Intent(ListActivity.this, ProfessionalActivity.class);
-                        intent.putExtra("object", usersResponse.getUser());
-                        intent.putExtra("object_aux", usersResponse.getSpecialism());
-                        intent.putExtra("object_aux_aux", usersResponse.getHealthProfessional());
+                        intent.putExtra("object", (Parcelable) usersResponse.getUser());
+                        intent.putExtra("object_aux", (Parcelable) usersResponse.getSpecialism());
+                        intent.putExtra("object_aux_aux", (Parcelable) usersResponse.getHealthProfessional());
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(intent);
                     }
@@ -162,7 +163,7 @@ public class ListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         User user = medicals.get(position);
                         Intent intent = new Intent(ListActivity.this, ProfessionalActivity.class);
-                        intent.putExtra("object", user);
+                        intent.putExtra("object", (Parcelable) user);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(intent);
                     }
@@ -258,7 +259,7 @@ public class ListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Specialism specialism = specialisms.get(position);
                         Intent intent = new Intent(ListActivity.this, SpecialitismsActivity.class);
-                        intent.putExtra("object", specialism);
+                        intent.putExtra("object", (Parcelable) specialism);
                         startActivity(intent);
                     }
                 });
