@@ -19,9 +19,7 @@ public class SplashScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         final SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
         new Timer().schedule(new TimerTask() {
-
             @Override
             public void run() {
                 if (mPrefs.getBoolean("isLoggedSharedPrefs", false) == true) {
@@ -29,7 +27,6 @@ public class SplashScreenActivity extends Activity {
                     Intent intent = new Intent();
                     intent.setClass(SplashScreenActivity.this, MainScreenSSActivity.class);
                     startActivity(intent);
-
                 } else {
                     finish();
                     Intent intent = new Intent();

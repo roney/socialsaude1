@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -135,7 +136,7 @@ public class ListActivity extends AppCompatActivity implements SearchView.OnQuer
                         Intent intent = new Intent(ListActivity.this, ProfessionalActivity.class);
                         intent.putExtra("object", usersResponse.getUser());
                         intent.putExtra("object_aux", usersResponse.getSpecialism());
-                        intent.putExtra("object_aux_aux", usersResponse.getHealthProfessional());
+                        intent.putExtra("object_aux_aux",  usersResponse.getHealthProfessional());
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(intent);
                     }
